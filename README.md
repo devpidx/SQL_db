@@ -1,1 +1,1 @@
-# SQL_db
+# SQL Database for Product Codes Project
