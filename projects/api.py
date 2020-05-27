@@ -19,10 +19,10 @@ def home():
 # A route to return all of the available entries in our catalog.
 @app.route('/api/v1/resources/books/all', methods=['GET', 'POST', 'PUSH'])
 def api_all():
-    conn = sqlite3.connect('product_codes.db)
+    conn = sqlite3.connect('product_codes.db')
     conn.row_factory = dict_factory
     cur = conn.cursor()
-    all_product_codes = cur.execute('SELECT * FROM product_codes;').fetchall()
+    all_product_codes = cur.execute('SELECT * FROM product_codes_tb;').fetchall()
 
     return jsonify(all_product_codes)
 

@@ -9,3 +9,14 @@ CREATE TABLE product_codes (
 	requester VARCHAR (50),
 	date_code_assigned VARCHAR (11)
 );
+
+SELECT * 
+FROM product_codes; 
+
+SELECT code
+FROM product_codes
+WHERE product_definition LIKE '%ethanol%';
+
+SELECT *
+FROM product_codes
+WHERE oxygenate_percent >=75;

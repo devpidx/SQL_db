@@ -1,0 +1,5 @@
+CREATE PROCEDURE Requests @DateFrom date, @DateTo date , @Productdefinition VARCHAR(50)
+AS
+SELECT *  FROM product_codes WHERE product_definition= @Productdefinition  
+    AND date_code_assigned  >= @DateFrom  and date_code_assigned  <=  @DateTo 
+GO;

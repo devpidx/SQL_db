@@ -1,0 +1,5 @@
+CREATE PROCEDURE NumberOfRequests @DateFrom date, @DateTo date , @Productdefinition VARCHAR(50)
+AS
+SELECT count(*) as count FROM product_codes WHERE product_definition= @Productdefinition  
+    AND date_code_assigned  >= @DateFrom  and date_code_assigned  <=  @DateTo 
+GO;
