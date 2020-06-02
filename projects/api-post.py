@@ -1,9 +1,14 @@
 import flask
 from flask import request, jsonify
 import sqlite3
+from sqlalchemy import create_engine
+import pandas as pd
+
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
+
+print('SAMPLE CALL: http://127.0.0.1:5000/api/v1/resources/books?author=Connie+Willis&id=24')
 
 def dict_factory(cursor, row):
     d = {}
@@ -13,18 +18,30 @@ def dict_factory(cursor, row):
 
 @app.route('/', methods=['GET'])
 def home():
-    return "<h1>Distant Reading Archive</h1>\
-        <p>This site is a prototype API for distant reading of science fiction novels.</p>"
+    return '''<h1>Distant Reading Archive</h1>
+<p>A prototype API for distant reading of science fiction novels.</p>'''
 
-# A route to return all of the available entries in our catalog.
-@app.route('/api/v1/resources/books/all', methods=['GET', 'POST', 'PUSH'])
+@app.route('/api/v1/resources/books/all', methods=['GET'])
+
+
 def api_all():
-    conn = sqlite3.connect('product_codes.db')
-    conn.row_factory = dict_factory
-    cur = conn.cursor()
-    all_product_codes = cur.execute('SELECT * FROM product_codes_tb;').fetchall()
+#    conn = sqlite3.connect('books.db')
+    # conn = sqlite3.connect('prodcodes.db')
+    # conn.row_factory = dict_factory
+    # cur = conn.cursor()
+    # all_books = cur.execute('SELECT * FROM prodcodes;').fetchall()
+    rds_connection_string = "postgres:2290@localhost:5432/PIDX_Codes_db"
+    engine = create_engine(f'postgresql://{rds_connection_string}')
+    aa = engine.execute("select * from product_codes")  
+    return aa
+    # conn.row_factory = dict_factory
+    # cur = conn.cursor()
+    # all_books = cur.execute('SELECT * FROM prodcodes;').fetchall()
 
-    return jsonify(all_product_codes)
+    # all_books = pd.read_sql_query('select * from product_codes', con=engine)
+
+
+    # return jsonify(all_books)
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -33,34 +50,33 @@ def page_not_found(e):
 @app.route('/api/v1/resources/books', methods=['GET'])
 def api_filter():
     query_parameters = request.args
-
+    print(query_parameters)
     code = query_parameters.get('code')
-    product_definition = query_parameters.get('product_definition')
-    description = query_parameters.get('description')
-
-    query = "SELECT * FROM books WHERE"
+    published = query_parameters.get('published')
+    author = query_parameters.get('author')
+    
+    query = "SELECT * FROM prodcodes WHERE"
     to_filter = []
-
+    
     if code:
         query += ' code=? AND'
         to_filter.append(code)
-    if product_definition:
-        query += ' product_definition=? AND'
-        to_filter.append(product_definition)
-    if description:
-        query += ' description=? AND'
-        to_filter.append(description)
-    if not (code or product_definition or description):
+    if published:
+        query += ' published=? AND'
+        to_filter.append(published)
+    if author:
+        query += ' author=? AND'
+        to_filter.append(author)
+    if not (id or published or author):
         return page_not_found(404)
-
+    
     query = query[:-4] + ';'
-
-    conn = sqlite3.connect('product_codes.db')
+    
+    conn = sqlite3.connect('prodcodes.db')
     conn.row_factory = dict_factory
     cur = conn.cursor()
-
+    
     results = cur.execute(query, to_filter).fetchall()
-
     return jsonify(results)
 
 app.run()
