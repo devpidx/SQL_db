@@ -23,9 +23,9 @@ const displaydata = (data)=>{
   tbody.text("");
 
   //  Refactor to use Arrow Functions!
-  data.forEach((UFOSightings) => {
+  data.result.forEach((result) => {
     var row = tbody.append("tr");
-    Object.entries(UFOSightings).forEach(([key, value]) => {
+    Object.entries(result).forEach(([key, value]) => {
       var cell = row.append("td");
       cell.text(value);
     });

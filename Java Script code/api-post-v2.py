@@ -1,5 +1,5 @@
 import flask
-from flask import request, jsonify
+from flask import request, jsonify, render_template
 import sqlite3
 from sqlalchemy import create_engine
 import pandas as pd
@@ -16,20 +16,23 @@ def dict_factory(cursor, row):
         d[col[0]] = row[idx]
     return d
 
-@app.route('/', methods=['GET'])
-def home():
-    return '''<h1>Distant Reading Archive</h1>
-<p>A prototype API for distant reading of science fiction novels.</p>'''
+# Route to render index.html template using data from Mongo
+@app.route("/")
+def index():
+
+    # Return template and data
+    return render_template("index.html")
+
+# @app.route('/', methods=['GET'])
+# def home():
+#     return '''<h1>Distant Reading Archive</h1>
+# <p>A prototype API for distant reading of science fiction novels.</p>'''
 
 @app.route('/api/v1/resources/books/all', methods=['GET'])
 
 
 def api_all():
-#    conn = sqlite3.connect('books.db')
-    # conn = sqlite3.connect('prodcodes.db')
-    # conn.row_factory = dict_factory
-    # cur = conn.cursor()
-    # all_books = cur.execute('SELECT * FROM prodcodes;').fetchall()
+
     rds_connection_string = "postgres:pidxdev@localhost:5432/PIDX_Codes_db"
     engine = create_engine(f'postgresql://{rds_connection_string}')
     aa = engine.execute("select * from product_codes")  
