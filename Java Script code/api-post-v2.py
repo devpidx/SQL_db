@@ -1,11 +1,13 @@
 import flask
 from flask import request, jsonify, render_template
+from flask_cors import CORS
 import sqlite3
 from sqlalchemy import create_engine
 import pandas as pd
 
 
 app = flask.Flask(__name__)
+CORS(app)
 app.config["DEBUG"] = True
 
 print('SAMPLE CALL: http://127.0.0.1:5000/api/v1/resources/books/all')

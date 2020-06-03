@@ -66,8 +66,6 @@
 //   .then(data => obj = data)
 //   .then(() => console.log(data))
 
-
-
 var data = "http://127.0.0.1:5000/api/v1/resources/books/all"
 
 d3.json(data, function(data) {
