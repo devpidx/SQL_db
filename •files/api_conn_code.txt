@@ -1,0 +1,24 @@
+import urllib.error, urllib.request, urllib.parse
+import json
+
+target = 'http://127.0.0.1:5000/api/pidxcodes/v1/codes?' 
+local = input('Enter Code (e.q. A25 or B22): ')
+url = target + urllib.parse.urlencode({'code': local})
+
+print('\n----What we are calling------')
+print('Calling URL', url)
+
+data = urllib.request.urlopen(url).read()
+
+print('\n----What has been retrieved from the web call------')
+print('Retrieved', len(data), 'characters')
+print(data)
+
+newout = json.loads(data)
+
+print('\n----What has been converted to a JSON string------')
+print(newout)
+
+s = json.dumps(newout, indent=4, sort_keys=True)
+print('\n----What it looks like as a pretty printed JSON string------')
+print(s)

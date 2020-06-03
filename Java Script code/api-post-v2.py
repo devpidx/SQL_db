@@ -8,7 +8,7 @@ import pandas as pd
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
-# print('SAMPLE CALL: http://127.0.0.1:5000/api/v1/resources/books?author=Connie+Willis&id=24')
+print('SAMPLE CALL: http://127.0.0.1:5000/api/v1/resources/books/all')
 
 def dict_factory(cursor, row):
     d = {}
@@ -34,6 +34,8 @@ def api_all():
     engine = create_engine(f'postgresql://{rds_connection_string}')
     aa = engine.execute("select * from product_codes")  
     return jsonify({'result': [dict(row) for row in aa]})
+
+    print('SAMPLE CALL: http://127.0.0.1:5000/api/v1/resources/books/all')
 
     # conn.row_factory = dict_factory
     # cur = conn.cursor()
