@@ -87,4 +87,5 @@ def page_not_found(e):
 #     results = cur.execute(query, to_filter).fetchall()
 #     return jsonify(results)
 
-app.run()
+if __name__ == "__main__":
+    app.run(debug=True)
