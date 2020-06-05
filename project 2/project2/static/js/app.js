@@ -8,7 +8,7 @@
 
  //   // Get a reference to the table body
 
-var tbody ;
+const tbody = d3.select("tbody") ;
 var tableData ;
 var filteredData ; 
 
@@ -28,16 +28,37 @@ var cetaneoctaneValue ;
 var requesterValue ;
 
 var codeFilter ;
+var ProductdefFilter ;
+var DescriptionFilter ;
+var cetaneoctaneFilter ;
+var requesterFilter ;
 
+// tbody = d3.select("tbody"); 
 
-function displaydata(data){
+function displaydata(data, minVal=0, maxVal=10){
 
   //clearing previous filters
   tbody.text("");
   console.log("Display :" , data);
   //  Refactor to use Arrow Functions!
-  let selection = data.result.slice(0,10);
+  let selection = data.result.slice(minVal,maxVal);
   selection.forEach((ProductData) => {
+    var row = tbody.append("tr");
+    Object.entries(ProductData).forEach(([key, value]) => {
+      var cell = row.append("td");
+      cell.text(value);
+    });
+  });
+}
+
+function displaydata2(data){
+
+  //clearing previous filters
+  tbody.text("");
+  console.log("Display :" , data);
+  //  Refactor to use Arrow Functions!
+  // let selection = data.result.slice(0,10);
+  data.forEach((ProductData) => {
     var row = tbody.append("tr");
     Object.entries(ProductData).forEach(([key, value]) => {
       var cell = row.append("td");
@@ -52,7 +73,7 @@ d3.json('/api/v1/resources/books/all', function(data) {
    filteredData = tableData; 
 
     //   // Get a reference to the table body
-     tbody = d3.select("tbody");
+    //  tbody = d3.select("tbody");
 
     //   // Select the input element and get the raw HTML node
        codeElement = d3.select("#code");
@@ -66,6 +87,15 @@ d3.json('/api/v1/resources/books/all', function(data) {
      displaydata(tableData);
 
      button = d3.select("#filter-btn");
+     nextButton = d3.select("#nextButton")
+     prevButton = d3.select("#prevButton")
+
+     nextButton.on("click", function(){
+       displaydata(tableData, minVal=10, maxVal=20)
+     })
+     prevButton.on("click", function(){
+       displaydata(tableData, minVal=0, maxVal=10)
+     })
 
      button.on("click", function() {
       
@@ -75,7 +105,8 @@ d3.json('/api/v1/resources/books/all', function(data) {
       console.log("Clearing Old Entries");
       tbody.text("");
 
-      filteredData = tableData;
+      // filteredData = codeFilter(data);
+
 
       // Get the value property of the input element
       codeValue = codeElement.property("value");
@@ -94,63 +125,72 @@ d3.json('/api/v1/resources/books/all', function(data) {
       // console.log(filteredData);
 
       // creating functions that will filter by catagory
-      codeFilter = (tbody)=>{
-          return tbody.filter(ProductData=>ProductData.code === codeValue);
-        };
+
+      // codeFilter = (tbody)=>{
+      //     return tbody.filter(ProductData=>ProductData.code === codeValue);
+      //   };
       
-      const ProductdefFilter = (tbody)=>{
-          return tbody.filter(ProductData=>ProductData.product_definition === ProductdefValue);
-        };
-      const DescriptionFilter = (tbody)=>{
-          return tbody.filter(ProductData=>ProductData.description === DescriptionValue);
-        };
-      const cetaneoctaneFilter = (tbody)=>{
-          return tbody.filter(ProductData=>ProductData.cetane_octane === cetaneoctaneValue);
-        };
-      const requesterFilter = (tbody)=>{
-          return tbody.filter(ProductData=>ProductData.requester === requesterValue);
-        };
+      
+      function codeFilter(tableData){
+        let returnData = tableData['result'].filter(d=>d.code === codeValue);
+        console.log(returnData)
+        return returnData
+        // return false
+      };
+
+      // ProductdefFilter = (tbody)=>{
+      //     return tbody.filter(ProductData=>ProductData.product_definition === ProductdefValue);
+      //   };
+      // DescriptionFilter = (tbody)=>{
+      //     return tbody.filter(ProductData=>ProductData.description === DescriptionValue);
+      //   };
+      // cetaneoctaneFilter = (tbody)=>{
+      //     return tbody.filter(ProductData=>ProductData.cetane_octane === cetaneoctaneValue);
+      //   };
+      // requesterFilter = (tbody)=>{
+      //     return tbody.filter(ProductData=>ProductData.requester === requesterValue);
+      //   };
       // //appending filtered data to webpage
       if (codeValue != "") {
         console.log(`Filter-Date: ${codeValue}`);
         filteredData = codeFilter(filteredData);
-        displaydata(filteredData);
+        displaydata2(filteredData);
       }
       else {
-        displaydata(filteredData);
+        displaydata2(filteredData);
       }
-      if (ProductdefValue != "") {
-        console.log(`Filter-Productdef: ${ProductdefValue}`);
-        filteredData = ProductdefFilter(filteredData);
-        displaydata(filteredData);
-      }
-      else {
-        displaydata(filteredData);
-      }
-      if (DescriptionValue != "") {
-        console.log(`Filter-Description: ${DescriptionValue}`);
-        filteredData = DescriptionFilter(filteredData);
-        displaydata(filteredData);
-      }
-      else {
-        displaydata(filteredData);
-      }
-      if (cetaneoctaneFilter != "") {
-        console.log(`Filter-cetaneoctane: ${cetaneoctaneValue}`);
-        filteredData = cetaneoctaneFilter(filteredData);
-        displaydata(filteredData);
-      }
-      else {
-        displaydata(filteredData);
-      }
-      if (requesterValue != "") {
-        console.log(`Filter-shape: ${requesterValue}`);
-        filteredData = requesterFilter(filteredData);
-        displaydata(filteredData);
-      }
-      else {
-        displaydata(filteredData);
-      }
+      // if (ProductdefValue != "") {
+      //   console.log(`Filter-Productdef: ${ProductdefValue}`);
+      //   filteredData = ProductdefFilter(filteredData);
+      //   displaydata(filteredData);
+      // }
+      // else {
+      //   displaydata(filteredData);
+      // }
+      // if (DescriptionValue != "") {
+      //   console.log(`Filter-Description: ${DescriptionValue}`);
+      //   filteredData = DescriptionFilter(filteredData);
+      //   displaydata(filteredData);
+      // }
+      // else {
+      //   displaydata(filteredData);
+      // }
+      // if (cetaneoctaneFilter != "") {
+      //   console.log(`Filter-cetaneoctane: ${cetaneoctaneValue}`);
+      //   filteredData = cetaneoctaneFilter(filteredData);
+      //   displaydata(filteredData);
+      // }
+      // else {
+      //   displaydata(filteredData);
+      // }
+      // if (requesterValue != "") {
+      //   console.log(`Filter-shape: ${requesterValue}`);
+      //   filteredData = requesterFilter(filteredData);
+      //   displaydata(filteredData);
+      // }
+      // else {
+      //   displaydata(filteredData);
+      // }
     });
 });
 
