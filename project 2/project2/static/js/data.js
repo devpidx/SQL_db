@@ -1,8 +1,8 @@
-var data = "http://127.0.0.1:5000/api/v1/resources/books/all"
+// var data = "http://127.0.0.1:5000/api/v1/resources/books/all"
 
-d3.json(data, function(data) {
-  console.log(data);
-});
+// d3.json(data, function(data) {
+//   console.log(data);
+// });
 
 // var data = [{
 //   code: "B78",
