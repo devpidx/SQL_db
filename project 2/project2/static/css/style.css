@@ -1,18 +1,31 @@
+@import url("https://use.typekit.net/ref4qcs.css");
+
 * {
   box-sizing: border-box;
-  font-family: Ubuntu, sans-serif;
+  font-family: futura-pt, sans-serif !important;
+  text-transform: uppercase;
+}
+
+button {
+  text-align: center;
+  text-transform: uppercase !important;
 }
 
 .table-striped {
-  background-color: darkgray;
+  background-color: rgb(99, 99, 99);
 }
 .table-striped>tbody>tr:nth-of-type(odd){
-  background-color: lightgray;
+  background-color: rgb(82, 82, 82);
+}
+
+body {
+  font-family: futura-pt, sans-serif !important;
+  text-transform: uppercase !important;
 }
 
 html,
 body {
-  background-color: aqua !important;
+  background-color: white !important;
   height: 100%;
   padding: 0;
   margin: 0;
@@ -33,20 +46,34 @@ body {
   bottom: 0;
   left: 0;
   min-height: 100px;
-  background: #e7ca09;
+  background: rgb(82, 82, 82);
+}
+
+.navbar-default {
+  background-color: white;
+}
+
+.navbar-default .navbar-brand {
+  color: rgb(82, 82, 82);
 }
 
 .container {
-  background-color : #738037; 
+  display: flex;
+  justify-content:center;
+  background-color: white !important;
 }
+
+.btn-default {
+  display: inline-block !important;
+}
+
 /* The code styles the text at the bottom of the footer */
 .footer > .bottom {
-  position: absolute;
   right: 0;
   bottom: 0;
   left: 0;
   padding: 5px;
-  background: #e7ca09;
+  background: rgb(82, 82, 82);
 }
 
 .navbar {
@@ -68,13 +95,24 @@ body {
   margin-top: 50px;
 }
 
+.panel-default>.panel-heading {
+  text-align: center;
+  background-color: rgb(99, 99, 99);
+}
+
 .filters .panel-body {
   padding: 0;
 }
 
 .filters {
+  background: red !important;
   margin-top: 10px;
 }
+
+.filters .list-group-item {
+  background-color: rgb(202, 101, 40) !important;
+}
+
 
 select {
   display: block;
@@ -109,7 +147,7 @@ select {
   padding: 20px;
   margin: 0;
   background : yellow;
-  background-image: url("../images/oil_gas.jpg");
+  background-image: url("../images/oil_gas_BW.jpg");
   /* background-attachment: fixed; */
   background-position: bottom center;
   background-size: cover;
@@ -127,6 +165,24 @@ select {
   animation: subtitle 1.2s forwards linear;
   animation-delay: 1.2s;
 }
+
+.btn-group-lg {
+  text-align: center;
+  display:flex;
+  justify-content:center;
+}
+
+/* .prevButton .btn-group-lg>.btn {
+  display: inline-block;
+  margin-left: 30%;
+}
+
+.pneButton .btn-group-lg>.btn {
+  display: inline-block;
+  margin-left: 30%;
+} */
+
+
 
 /* input placeholder color changes */
 .form-control::-webkit-input-placeholder {
@@ -177,7 +233,7 @@ select {
     height: 1px;
     margin-top: 20px;
     content: " ";
-    background: aliceblue;
+    background: orange;
   }
 
   #table-area td {
@@ -233,4 +289,9 @@ select {
   to {
     opacity: 1;
   }
+}
+
+@font-face{
+  font-family:; 
+  src: https://use.typekit.net/ref4qcs.css
 }
