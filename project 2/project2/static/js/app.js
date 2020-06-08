@@ -35,7 +35,7 @@ var requesterFilter ;
 
 // tbody = d3.select("tbody"); 
 
-function displaydata(data, minVal=0, maxVal=10){
+function displaydata(data, minVal=0, maxVal=20){
 
   //clearing previous filters
   tbody.text("");
@@ -67,7 +67,7 @@ function displaydata2(data){
   });
 }
 
-d3.json('/api/v1/resources/books/all', function(data) {
+d3.json('/api/v1/resources/codes/all', function(data) {
   console.log(data);
    tableData = data;
    filteredData = tableData; 
@@ -91,10 +91,10 @@ d3.json('/api/v1/resources/books/all', function(data) {
      prevButton = d3.select("#prevButton")
 
      nextButton.on("click", function(){
-       displaydata(tableData, minVal=10, maxVal=20)
+       displaydata(tableData, minVal=20, maxVal=40)
      })
      prevButton.on("click", function(){
-       displaydata(tableData, minVal=0, maxVal=10)
+       displaydata(tableData, minVal=0, maxVal=20)
      })
 
      button.on("click", function() {

@@ -13,7 +13,7 @@ app.config["DEBUG"] = True
 rds_connection_string = "postgres:pidxdev@localhost:5432/PIDX_Codes_db"
 engine = create_engine(f'postgresql://{rds_connection_string}')
 
-print('SAMPLE CALL: http://127.0.0.1:5000/api/v1/resources/books/all')
+print('SAMPLE CALL: http://127.0.0.1:5000/api/v1/resources/codes/all')
 
 def dict_factory(cursor, row):
     d = {}
@@ -27,13 +27,14 @@ def index():
 
     # Return template and data
     return render_template("index.html")
-@app.route('/api/v1/resources/books/all', methods=['GET'])
+@app.route('/api/v1/resources/codes/all', methods=['GET'])
 def api_all():
 
     result = engine.execute("select code,product_definition,description,cetane_octane,oxygenated_rbob_type,oxygenate_percent,comments,requester,date_code_assigned from product_codes")  
     return jsonify({'result': [dict(row) for row in result]})
 
-    print('SAMPLE CALL: http://127.0.0.1:5000/api/v1/resources/books/all')
+    print('SAMPLE CALL: http://127.0.0.1:5000/api/v1/resources/codes/all')
+
 @app.errorhandler(404)
 def page_not_found(e):
     return "<h1>404</h1><p>The resource could not be found.</p>", 404
