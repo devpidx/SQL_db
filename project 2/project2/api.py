@@ -27,6 +27,8 @@ def index():
 
     # Return template and data
     return render_template("index.html")
+
+# Create route to return all books 
 @app.route('/api/v1/resources/codes/all', methods=['GET'])
 def api_all():
 
@@ -34,6 +36,39 @@ def api_all():
     return jsonify({'result': [dict(row) for row in result]})
 
     print('SAMPLE CALL: http://127.0.0.1:5000/api/v1/resources/codes/all')
+
+# # Create route to return specific filters
+# @app.route('/api/v1/resources/codes/search/', methods=['GET'])
+# def api_filter():
+#     query_parameters = request.args
+#     print(query_parameters)
+#     code = query_parameters.get('code')
+#     published = query_parameters.get('published')
+#     author = query_parameters.get('author')
+    
+#     query = "select code,product_definition,description,cetane_octane,oxygenated_rbob_type,oxygenate_percent,comments,requester,date_code_assigned from product_codes"
+#     to_filter = []
+    
+#     if code:
+#         query += ' code=? AND'
+#         to_filter.append(code)
+#     if product_definition:
+#         query += ' proddef=? AND'
+#         to_filter.append(product_definition)
+#     if description:
+#         query += ' description=? AND'
+#         to_filter.append(description)
+#     if cetane_octane:
+#         query += ' cetoct=? AND'
+#         to_filter.append(description)
+#     if not (code or product_definition or description or):
+#         return page_not_found(404)
+    
+#     query = query[:-4] + ';'
+
+#     results = cur.execute(query, to_filter).fetchall()
+#     return jsonify(results)
+
 
 @app.errorhandler(404)
 def page_not_found(e):
