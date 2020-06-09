@@ -130,13 +130,21 @@ d3.json('/api/v1/resources/codes/all', function(data) {
       //     return tbody.filter(ProductData=>ProductData.code === codeValue);
       //   };
       
-      
-      function codeFilter(tableData){
-        let returnData = tableData['result'].filter(d=>d.code === codeValue);
-        console.log(returnData)
-        return returnData
-        // return false
-      };
+      $(document).ready(function () {
+        $(“#tableSearch”).on(“keyup”, function () {
+            var value = $(this).val().toLowerCase();
+            $(“#myTable tr”).filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+      });
+
+      // function codeFilter(tableData){
+      //   let returnData = tableData['result'].filter(d=>d.code === codeValue);
+      //   console.log(returnData)
+      //   return returnData
+      //   // return false
+      // };
 
       // ProductdefFilter = (tbody)=>{
       //     return tbody.filter(ProductData=>ProductData.product_definition === ProductdefValue);
