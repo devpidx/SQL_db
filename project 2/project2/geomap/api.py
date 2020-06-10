@@ -10,7 +10,7 @@ app = Flask(__name__)
 CORS(app)
 app.config["DEBUG"] = True
 
-rds_connection_string = "postgres:pidxdev@localhost:5432/PIDX_Codes_db"
+rds_connection_string = "postgres:2290@localhost:5432/PIDX_Codes_db"
 engine = create_engine(f'postgresql://{rds_connection_string}')
 
 print('SAMPLE CALL: http://127.0.0.1:5000/api/v1/resources/codes/all')
