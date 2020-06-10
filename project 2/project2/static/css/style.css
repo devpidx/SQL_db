@@ -295,3 +295,7 @@ select {
   font-family:; 
   src: https://use.typekit.net/ref4qcs.css
 }
+
+#mapid {
+  height: 180px;
+}
