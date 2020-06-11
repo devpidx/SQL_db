@@ -10,16 +10,25 @@ app = Flask(__name__)
 CORS(app)
 app.config["DEBUG"] = True
 
-rds_connection_string = "postgres:2290@localhost:5432/PIDX_Codes_db"
+rds_connection_string = "postgres:pidxdev@localhost:5432/PIDX_Codes_db"
 engine = create_engine(f'postgresql://{rds_connection_string}')
 
 print('SAMPLE CALL: http://127.0.0.1:5000/api/v1/resources/codes/all')
+print('===========================================================')
+print('SAMPLE CALL: http://127.0.0.1:5000/api/geo/terminals')
 
 def dict_factory(cursor, row):
     d = {}
     for idx, col in enumerate(cursor.description):
         d[col[0]] = row[idx]
     return d
+
+# Create route to return all books 
+@app.route('/api/geo/terminals', methods=['GET'])
+def api_geo():
+
+    result = engine.execute("select terminal_id,country,submitter,terminal_owner,latitude,longitude from terminal_countries")  
+    return jsonify({'result': [dict(row) for row in result]})
 
 # Route to render index.html template using data from Mongo
 @app.route("/")
@@ -36,6 +45,8 @@ def api_all():
     return jsonify({'result': [dict(row) for row in result]})
 
     print('SAMPLE CALL: http://127.0.0.1:5000/api/v1/resources/codes/all')
+
+
 
 # # Create route to return specific filters
 # @app.route('/api/v1/resources/codes/search/', methods=['GET'])

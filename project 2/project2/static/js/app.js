@@ -153,6 +153,7 @@
  
  
        function codeFilter(tableData){
+          var matchRegex = new RegExp(searchValue, 'i');
           let returnData = tableData['result'].filter(d=>d.code === codeValue);
          // var value = $(code).val().toLowerCase();
          // $("#table tr").filter(function () {
@@ -163,6 +164,18 @@
          return returnData
          // return false
        };
+
+       function codeFilter(tableData){
+        let returnData = tableData['result'].filter(d=>d.code === codeValue);
+       // var value = $(code).val().toLowerCase();
+       // $("#table tr").filter(function () {
+       //   $(code).toggle($(code).text().toLowerCase().indexOf(value) > -1)
+       // });
+
+       console.log(returnData)
+       return returnData
+       // return false
+     };
  
  
  
@@ -198,7 +211,7 @@
        // })
        
      function ProductdefFilter(tableData){
-         let returnData = tableData['result'].filter(d=>d.product_definition === ProductdefValue);
+         var codeFilter = tableData['result'].filter(d=>d.product_definition === ProductdefValue);
         console.log(returnData)
         return returnData
         // return false
