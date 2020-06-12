@@ -87,3 +87,10 @@ CREATE OR REPLACE VIEW public."V_ProductGroupbyCountry"
     sum(terminal_products.oub) AS oub
    FROM terminal_products
   GROUP BY terminal_products.country;
+
+
+CREATE OR REPLACE VIEW public."V_SumOfProducts"
+ AS
+ SELECT "V_ProductGroupbyCountry".country,
+    "V_ProductGroupbyCountry".b25 + "V_ProductGroupbyCountry".b29 + "V_ProductGroupbyCountry".b37 + "V_ProductGroupbyCountry".d11 + "V_ProductGroupbyCountry".d2k + "V_ProductGroupbyCountry".d6n + "V_ProductGroupbyCountry".d80 + "V_ProductGroupbyCountry".p18 + "V_ProductGroupbyCountry".p2r + "V_ProductGroupbyCountry".p37 + "V_ProductGroupbyCountry".p42 + "V_ProductGroupbyCountry".o21 + "V_ProductGroupbyCountry".o73 + "V_ProductGroupbyCountry".o8i + "V_ProductGroupbyCountry".oub AS sumproduct
+   FROM "V_ProductGroupbyCountry";
