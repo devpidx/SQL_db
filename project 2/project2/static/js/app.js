@@ -156,8 +156,10 @@
        DescriptionValue = DescriptionElement.property("value");
        console.log(DescriptionValue);
        cetaneoctaneValue = cetaneoctaneElement.property("value");
+       cetaneoctaneValue =cetaneoctaneValue.toString() ;
        console.log(cetaneoctaneValue);
        requesterValue = requesterElement.property("value");
+       requesterValue = requesterValue.toUpperCase();
        console.log(requesterValue);
  
  
