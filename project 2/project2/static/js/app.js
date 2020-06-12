@@ -34,9 +34,11 @@
  var requesterFilter ;
  var MxVal ;
  var MnVal;
+ var FF;
  
  MnVal = 0 ;
  MxVal = 20 ;
+//  FF = false ;
  
  
  function displaydata(data, minVal=MnVal, maxVal=MxVal){
@@ -57,12 +59,18 @@
  }
 
  function displayfilterdata(data, minVal=MnVal, maxVal=MxVal){
-
+  
+  // FF = false
+  
   //clearing previous filters
   tbody.text("");
   console.log("Display :" , data);
   //  Refactor to use Arrow Functions!
-  let selection = data.slice(minVal,maxVal);
+  // if (FF = false) {
+    // let selection = data.result.slice(minVal,maxVal);
+  // } else if (FF = true) {
+    let selection = data.slice(minVal,maxVal);
+  // }
   selection.forEach((ProductData) => {
     var row = tbody.append("tr");
     Object.entries(ProductData).forEach(([key, value]) => {
@@ -75,7 +83,9 @@
 
  
  d3.json('/api/v1/resources/codes/all', function(data) {
-   console.log(data);
+
+    // FF = false ;
+    console.log(data);
     tableData = data;
     filteredData = tableData; 
  
@@ -97,36 +107,46 @@
       nextButton = d3.select("#nextButton")
       prevButton = d3.select("#prevButton")
       resetButton= d3.select("#reset-btn")
+
       nextButton.on("click", function(){
-        
- 
-       console.log(`max: ${MxVal}`, `min: ${MnVal}`);
         if (MxVal < 3376){
-         MnVal = MnVal + 20 ;
-         MxVal = MxVal + 20 ;
-         displaydata(filteredData, minVal=MnVal, maxVal=MxVal);
+          // console.log(`FF: ${FF}`);
+          MnVal = MnVal + 20 ;
+          MxVal = MxVal + 20 ;
+          // if (FF = false) {
+            displaydata(filteredData, minVal=MnVal, maxVal=MxVal);
+          // }else if (FF = true) {
+            // displayfilterdata(filteredData, minVal=MnVal, maxVal=MxVal); 
+          // }
        };
  
       })
  
      prevButton.on("click", function(){
        if (MnVal > 0){
-         MnVal = MnVal - 20 ;
-         MxVal = MxVal - 20 ;
-         displaydata(filteredData, minVal=MnVal, maxVal=MxVal);
+          MnVal = MnVal - 20 ;
+          MxVal = MxVal - 20 ;
+          // if (FF = false) {
+            displaydata(filteredData, minVal=MnVal, maxVal=MxVal);
+          // }
+          // if (FF = true) {
+            // displayfilterdata(filteredData, minVal=MnVal, maxVal=MxVal); 
+          // }
        };
       })
  
       button.on("click", function() {
-       
+        
+        FF = true ;
+
+        tableData = data;
+        filteredData = tableData; 
+        
        console.log("Filter Button Was Clicked");
          
        //clearing all values displayed on the webpage from previous filters
        console.log("Clearing Old Entries");
        tbody.text("");
- 
-       // filteredData = codeFilter(data);
- 
  
        // Get the value property of the input element
        codeValue = codeElement.property("value");
@@ -140,42 +160,14 @@
        requesterValue = requesterElement.property("value");
        console.log(requesterValue);
  
-       // var filteredData = data.filter(data => data.Date === inputValue);
- 
-       // console.log(filteredData);
- 
-       // creating functions that will filter by catagory
- 
-       // codeFilter = (tbody)=>{
-       //     return tbody.filter(ProductData=>ProductData.code === codeValue);
-       //   };
- 
- 
  
        function codeFilter(tableData){
-          var matchRegex = new RegExp(searchValue, 'i');
-          let returnData = tableData['result'].filter(d=>d.code === codeValue);
-         // var value = $(code).val().toLowerCase();
-         // $("#table tr").filter(function () {
-         //   $(code).toggle($(code).text().toLowerCase().indexOf(value) > -1)
-         // });
- 
+          // let returnData = tableData['result'].filter(d=>d.code === codeValue);
+          let returnData = tableData['result'].filter(d=>d.code.match(codeValue));
          console.log(returnData)
          return returnData
          // return false
        };
-
-       function codeFilter(tableData){
-        let returnData = tableData['result'].filter(d=>d.code === codeValue);
-       // var value = $(code).val().toLowerCase();
-       // $("#table tr").filter(function () {
-       //   $(code).toggle($(code).text().toLowerCase().indexOf(value) > -1)
-       // });
-
-       console.log(returnData)
-       return returnData
-       // return false
-     };
  
  
  
@@ -211,26 +203,26 @@
        // })
        
      function ProductdefFilter(tableData){
-         var codeFilter = tableData['result'].filter(d=>d.product_definition === ProductdefValue);
+         let returnData = tableData['result'].filter(d=>d.product_definition.match(ProductdefValue));
         console.log(returnData)
         return returnData
         // return false
       };
  
      function DescriptionFilter(tableData){
-       let returnData = tableData['result'].filter(d=>d.description === DescriptionValue);
+       let returnData = tableData['result'].filter(d=>d.description.match(DescriptionValue));
       console.log(returnData)
       return returnData
       // return false
       };
      function cetaneoctaneFilter(tableData){
-       let returnData = tableData['result'].filter(d=>d.cetane_octane === cetaneoctaneValue);
+       let returnData = tableData['result'].filter(d=>d.cetane_octane.match(cetaneoctaneValue));
       console.log(returnData)
       return returnData
       // return false
       };
      function requesterFilter(tableData){
-       let returnData = tableData['result'].filter(d=>d.requester === requesterValue);
+       let returnData = tableData['result'].filter(d=>d.requester.match(requesterValue));
       console.log(returnData)
       return returnData
       // return false
@@ -290,20 +282,29 @@
  
  //  resetting the displayed data to the full dataset while keeping the filter values untouched
  resetButton.on("click", function() {
-   console.log("Clearing Old Entries");
-   tbody.text("");
-   document.getElementById('code').value = '';
-   document.getElementById('Productdef').value = '';
-   document.getElementById('Description').value = '';
-   document.getElementById('cetaneoctane').value = '';
-   document.getElementById('requester').value = '';
-   MnVal = 0 ;
-   MxVal = 20 ;
-   displaydata(tableData, minVal=MnVal, maxVal=MxVal);
-   filteredData = tableData;
+   reset()
  });
  
- 
+ function reset(){
+        resetButtons()
+        MnVal = 0 ;
+        MxVal = 20 ;
+        displaydata(tableData, minVal=MnVal, maxVal=MxVal);
+        filteredData = tableData; 
+      };
+      
+  function resetButtons(){
+        FF = false ;
+        console.log("Clearing Old Entries");
+        tbody.text("");
+        document.getElementById('code').value = '';
+        document.getElementById('Productdef').value = '';
+        document.getElementById('Description').value = '';
+        document.getElementById('cetaneoctane').value = '';
+        document.getElementById('requester').value = '';
+        filteredData = tableData; 
+      };
+
  });
  
  
