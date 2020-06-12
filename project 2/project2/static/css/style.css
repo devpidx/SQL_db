@@ -62,10 +62,10 @@ body {
   justify-content:center;
   background-color: white !important;
 }
-#mapid {
+/* #mapid {
   width: auto;
   height: 100%;
-}
+} */
 
 .btn-default {
   display: inline-block !important;
@@ -151,7 +151,7 @@ select {
   padding: 20px;
   margin: 0;
   background : rgb(255, 102, 0);
-  /* background-image: url("../images/oil_gas_BW.jpg"); */
+  background-image: url("../images/oil_gas_BW.jpg");
   /* background-attachment: fixed; */
   background-position: bottom center;
   background-size: cover;
@@ -300,6 +300,7 @@ select {
   src: https://use.typekit.net/ref4qcs.css
 }
 
-/* #mapid {
+#mapid {
+  width: 2000px;
   height: 180px;
-} */
+}

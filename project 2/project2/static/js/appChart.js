@@ -1,8 +1,8 @@
 
   // Create the map object with options
 var map = L.map("mapid", {
-    center: [40.73, -74.0059],
-    zoom: 12
+    center: [48.73, 16.0059],
+    zoom: 5
   });
 // function createMap(countryTerminals) {
 var markerLayer
@@ -27,7 +27,7 @@ d3.json(apiURL).then(function(response) {
     // Check for location property
     if (apiData) {
       // Add a new marker to the cluster group and bind a pop-up
-      markers.push(L.circleMarker([apiData.latitude, apiData.longitude], options={radius:5}));
+      markers.push(L.circleMarker([apiData.latitude, apiData.longitude], options={radius:5}, color="orange"));
     }
 
   }
