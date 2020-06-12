@@ -63,3 +63,27 @@ UPDATE
   public.product_codes
 SET
   requester = UPPER(requester)
+
+
+
+
+CREATE OR REPLACE VIEW public."V_ProductGroupbyCountry"
+ AS
+ SELECT terminal_products.country,
+    sum(terminal_products.b25) AS b25,
+    sum(terminal_products.b29) AS b29,
+    sum(terminal_products.b37) AS b37,
+    sum(terminal_products.d11) AS d11,
+    sum(terminal_products.d2k) AS d2k,
+    sum(terminal_products.d6n) AS d6n,
+    sum(terminal_products.d80) AS d80,
+    sum(terminal_products.p18) AS p18,
+    sum(terminal_products.p2r) AS p2r,
+    sum(terminal_products.p37) AS p37,
+    sum(terminal_products.p42) AS p42,
+    sum(terminal_products.o21) AS o21,
+    sum(terminal_products.o73) AS o73,
+    sum(terminal_products.o8i) AS o8i,
+    sum(terminal_products.oub) AS oub
+   FROM terminal_products
+  GROUP BY terminal_products.country;
