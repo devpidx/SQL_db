@@ -52,3 +52,14 @@ WHERE product_definition LIKE '%ethanol%';
 SELECT *
 FROM product_codes
 WHERE oxygenate_percent >=75;
+
+
+update public.product_codes set cetane_octane='' where cetane_octane is null
+update public.product_codes set description='' where description is null
+update public.product_codes set requester='' where requester is null
+
+
+UPDATE
+  public.product_codes
+SET
+  requester = UPPER(requester)
